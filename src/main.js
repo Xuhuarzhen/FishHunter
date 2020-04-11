@@ -7,4 +7,4 @@ let config = {
 }
 
 // main game object
-//let game = new Phaser.Game(config);
+let game = new Phaser.Game(config);
