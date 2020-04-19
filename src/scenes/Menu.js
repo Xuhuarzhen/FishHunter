@@ -33,34 +33,27 @@ class Menu extends Phaser.Scene {
         let textSpacer = 64;
 
        // this.add.text(centerX, centerY- textSpacer, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY, 'Use ←→ arrows to move & (F) to Fire', menuConfig).setOrigin(0.5);
+        //this.add.text(centerX, centerY, 'Use ←→ arrows to move & (F) to Fire', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#8462FF';
         menuConfig.color = '#000';
-        this.add.text(centerX, centerY + textSpacer, 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);  
-    
-        // define keys
+        this.add.text(centerX, centerY, ' PRESS (A) FOR 2 PLAYERS MODE ', menuConfig).setOrigin (0.5);       
+        this.add.text(centerX, centerY + textSpacer, ' or PRESS (F) for SINGLE PLAYER MODE ', menuConfig).setOrigin (0.5);
+
+        //define play mode/level difficulty keys
+        keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyLEFT)) {
-            // easy mode
-            game.settings = {
-                spaceshipSpeed: 3,
-                gameTimer: 60000    
-            }
+        if (Phaser.Input.Keyboard.JustDown(keyA)){
             this.sound.play('sfx_select');
-            this.scene.start("playScene");    
+            this.scene.start("menu2Scene");
         }
-        if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-            // hard mode
-             game.settings = {
-                spaceshipSpeed: 4,
-                gameTimer: 45000    
-            }
+        if (Phaser.Input.Keyboard.JustDown(keyF)) {
             this.sound.play('sfx_select');
-            this.scene.start("playScene");    
+            this.scene.start("menu3Scene");
         }
     }
 }
