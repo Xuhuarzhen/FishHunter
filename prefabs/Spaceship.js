@@ -1,11 +1,13 @@
 //Spaceship prefab
 class Spaceship extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, texture, frame, pointValue) {
+    constructor(scene, x, y, texture, frame, pointValue, Boolen) {
         super(scene, x, y, texture, frame);
 
         scene.add.existing(this);   // add to existing scene, displayList, updateList
         //store pointValue
         this.points = pointValue;
+        //check collision
+        this.isCollided = Boolen;
     }
 
     update() {
@@ -19,5 +21,6 @@ class Spaceship extends Phaser.GameObjects.Sprite {
 
     reset() {
         this.x = game.config.width;
+        this.isCollided = false;
     }
 }

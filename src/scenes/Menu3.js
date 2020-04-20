@@ -8,15 +8,15 @@ class Menu3 extends Phaser.Scene {
         this.load.audio('sfx_select', './assets/start.wav');
         this.load.audio('sfx_explosion', './assets/fishsound.wav');
         this.load.audio('sfx_rocket', './assets/rocketshot.wav');
-        //this.load.image('title', './assets/fishhunter.png');
+        this.load.image('title2', './assets/menu2&3.png');
     }
 
     create() {
-        //this.title = this.add.sprite(0,0,'title').setOrigin(0,0);
+        this.title = this.add.sprite(0,0,'title2').setOrigin(0,0);
         // menu display 
         let menuConfig = {
             fontFamily: 'Courier',
-            fontSize: '28px',
+            fontSize: '20px',
             backgroundColor: '#F3B141',
             color: "#000",
             align: 'right',
@@ -29,8 +29,10 @@ class Menu3 extends Phaser.Scene {
         let textSpacer = 64;
 
         this.add.text(centerX, centerY - textSpacer, ' SINGLE PLAYER MODE ', menuConfig).setOrigin (0.5);
-        this.add.text(centerX, centerY, 'Use ←→ arrows to move & (F) to Fire', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#8462FF';
+        menuConfig.color = '#000';
+        this.add.text(centerX, centerY, 'Use ←→ arrows to move & (F) to Fire', menuConfig).setOrigin(0.5);
+        menuConfig.backgroundColor = '#03B141';
         menuConfig.color = '#000';
         this.add.text(centerX, centerY + textSpacer, 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);  
     

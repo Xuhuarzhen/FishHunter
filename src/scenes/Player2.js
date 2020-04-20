@@ -26,13 +26,13 @@ class Player2 extends Phaser.Scene {
         this.add.rectangle(37, 42, 566, 64, 0x0000FF).setOrigin(0, 0);
 
         //add rocket (p1)
-        this.p1Rocket = new Rocket(this, game.config.width/2 + 100, 408, 'rocket').setScale(1.1,1.1).setOrigin(0, 0);
+        this.p1Rocket = new Rocket1(this, game.config.width/2 + 100, 408, 'rocket').setScale(1.1,1.1).setOrigin(0, 0);
         //add fish(p2)
-        this.p2Rocket = new Rocket(this, game.config.width/2 - 100, 408, 'rocket').setScale(1.1,1.1).setOrigin(0, 0);
+        this.p2Rocket = new Rocket2(this, game.config.width/2 - 100, 408, 'rocket').setScale(1.1,1.1).setOrigin(0, 0);
         //add spaceships(x3)
-        this.ship01 = new Spaceship(this, game.config.width + 192, 132, 'spaceship', 0, 30).setScale(1.1,1.1).setOrigin(0,0);
-        this.ship02 = new Spaceship(this, game.config.width + 96, 196, 'spaceship', 0, 20).setScale(1.1,1.1).setOrigin(0,0);
-        this.ship03 = new Spaceship(this, game.config.width, 260, 'spaceship', 0, 10).setScale(1.1,1.1).setOrigin(0,0);
+        this.ship01 = new Spaceship(this, game.config.width + 192, 132, 'spaceship', 0, 30, false).setScale(1.1,1.1).setOrigin(0,0);
+        this.ship02 = new Spaceship(this, game.config.width + 96, 196, 'spaceship', 0, 20, false).setScale(1.1,1.1).setOrigin(0,0);
+        this.ship03 = new Spaceship(this, game.config.width, 260, 'spaceship', 0, 10, false).setScale(1.1,1.1).setOrigin(0,0);
         
         //define keys for Player 1
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F); //single player mode
@@ -101,40 +101,46 @@ class Player2 extends Phaser.Scene {
             this.ship03.update();
         } 
         // check collisions
-        if(this.checkCollision(this.p1Rocket, this.ship03)) {
+        if(!this.ship03.isCollided && this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship03);
+            this.sound.play('sfx_explosion');
             this.p1Score += this.ship03.points;
             this.scoreLeft.text = this.p1Score;
         }
-        if (this.checkCollision(this.p1Rocket, this.ship02)) {
+        if (!this.ship02.isCollided && this.checkCollision(this.p1Rocket, this.ship02)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship02);
+            this.sound.play('sfx_explosion');
             this.p1Score += this.ship02.points;
             this.scoreLeft.text = this.p1Score;
         }
-        if (this.checkCollision(this.p1Rocket, this.ship01)) {
+        if (!this.ship01.isCollided && this.checkCollision(this.p1Rocket, this.ship01)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
+            this.sound.play('sfx_explosion');
             this.p1Score += this.ship01.points;
             this.scoreLeft.text = this.p1Score;
         }
         // check collisions-player2
-        if(this.checkCollision(this.p2Rocket, this.ship03)) {
-            this.p1Rocket.reset();
+        if(!this.ship03.isCollided && this.checkCollision(this.p2Rocket, this.ship03)) {
+            this.p2Rocket.reset();
             this.shipExplode(this.ship03);
+            this.sound.play('sfxexplosion2');
             this.p2Score += this.ship03.points;
             this.scoreRight.text = this.p2Score;
         }
-        if (this.checkCollision(this.p2Rocket, this.ship02)) {
-            this.p1Rocket.reset();
+        if (!this.ship02.isCollided && this.checkCollision(this.p2Rocket, this.ship02)) {
+            this.p2Rocket.reset();
             this.shipExplode(this.ship02);
+            this.sound.play('sfxexplosion2');
             this.p2Score += this.ship02.points;
             this.scoreRight.text = this.p2Score;
         }
-        if (this.checkCollision(this.p2Rocket, this.ship01)) {
-            this.p1Rocket.reset();
+        if (!this.ship01.isCollided && this.checkCollision(this.p2Rocket, this.ship01)) {
+            this.p2Rocket.reset();
             this.shipExplode(this.ship01);
+            this.sound.play('sfxexplosion2');
             this.p2Score += this.ship01.points;
             this.scoreRight.text = this.p2Score;
         }
@@ -144,6 +150,7 @@ class Player2 extends Phaser.Scene {
         //simple AABB checking
         if (rocket.x < ship.x + ship.width && rocket.x + rocket.width > ship.x && rocket.y < ship.y + ship.height &&
             rocket.height + rocket.y > ship. y) {
+                ship.isCollided = true;  //fish has been collided
                 return true;
             } else {
                 return false;
@@ -161,10 +168,10 @@ class Player2 extends Phaser.Scene {
             boom.destroy();                     // remove explosion sprite
         });
         // score increment and repaint
-        this.p1Score += ship.points;
-        this.scoreLeft.text = this.p1Score;     
+        //this.p1Score += ship.points;
+        //this.scoreLeft.text = this.p1Score;     
         // play sound
-        this.sound.play('sfx_explosion');  
+        //this.sound.play('sfx_explosion');  
     }
 }
 
